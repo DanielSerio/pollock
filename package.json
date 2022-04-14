@@ -18,7 +18,8 @@
     "@mantine/form": "^4.1.3",
     "@mantine/hooks": "^4.1.3",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "tabler-icons-react": "^1.45.0"
   },
   "name": "pollock",
   "version": "1.0.0",

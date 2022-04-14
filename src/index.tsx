@@ -3,6 +3,7 @@ import { useHotkeys, useLocalStorage } from '@mantine/hooks'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
+import './global.scss'
 
 const container = document.getElementById('root') as HTMLDivElement
 
