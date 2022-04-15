@@ -197,13 +197,6 @@ export default function ArtForm() {
             onBlur={handlePasses}/>
         </Accordion.Item>
       </Accordion>
-      <Group my={'xl'} pl={36}>
-        <Button 
-          variant={'gradient'} 
-          type="submit" 
-          rightIcon={<Refresh />}
-          gradient={{from: 'green', to: 'lime'}}>Generate</Button>
-      </Group>
     </Box>
   );
 }

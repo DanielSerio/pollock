@@ -25,11 +25,22 @@ export function drawSplatter(ctx: CanvasRenderingContext2D, state: ArtFormState,
     return state.colors[~~(Math.random() * state.colors.length)]
   }
 
+  function getShadow(): string {
+    const { 
+      shadowBlur: blur, 
+      shadowOffsetY: y, 
+      shadowOffsetX: x, 
+      shadowOpacity: a 
+    } = state
+    return `drop-shadow(${x}px ${y}px ${blur}px rgba(0,0,0,${a / 100})) blur(0.5px)`
+  }
+
   
   ctx.save()
   ctx.moveTo(...getRandomCoordinates())
   ctx.lineWidth = getRandomLineWidth()
   ctx.lineDashOffset = state.strokeDashOffset
+  ctx.filter = getShadow()
   ctx.setLineDash(state.strokeDashArray)
   ctx.lineCap = 'round'
   ctx.strokeStyle = randomColor()
