@@ -1,4 +1,4 @@
-import { Box, Burger, Container, createStyles, CSSObject, Header, MantineTheme } from '@mantine/core';
+import { Box, Burger, Container, createStyles, CSSObject, Header, MantineTheme, Text } from '@mantine/core';
 import React from 'react';
 
 function createHeaderStyles(t: MantineTheme): Record<string, CSSObject> {
@@ -24,10 +24,19 @@ export default function AppHeader({ openMenu, opened }: AppHeaderProps) {
   return (
     <Box component='header'>
       <Header height={64}>
-        <Container className={classes.headerContainer}>
-          <Box>Logo</Box>
+        <Container sx={{maxWidth: '9999px'}} className={classes.headerContainer}>
           <Box>
             <Burger opened={opened} onClick={openMenu}/>
+          </Box>
+          <Box>
+            <Text
+              size='xl'
+              weight={'bold'}
+              variant={'gradient'} 
+              gradient={{
+                from: 'green',
+                to: 'lime'
+              }}>Pollock</Text>
           </Box>
         </Container>
       </Header>
