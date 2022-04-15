@@ -1,6 +1,6 @@
-import { Box, BoxProps, Button, Navbar, useMantineColorScheme } from '@mantine/core';
+import { Box, BoxProps, Button, Navbar, ThemeIcon, useMantineColorScheme } from '@mantine/core';
 import React, { ReactElement } from 'react';
-import { Moon, Settings, Sun } from 'tabler-icons-react';
+import { Moon, Refresh, Settings, Sun } from 'tabler-icons-react';
 import ArtForm from '../../features/ArtForm/ArtForm';
 
 export interface AppNavbarProps {
@@ -70,6 +70,19 @@ export default function AppNavbar({ opened }: AppNavbarProps) {
       </NavbarBlock>
       <NavbarBlock icon={<Settings size={18} />}>
         <ArtForm />
+      </NavbarBlock>
+      <NavbarBlock 
+        icon={
+        opened ? <></>
+          : (
+            <ThemeIcon variant={'light'} sx={{cursor: 'pointer' }}>
+              <Refresh 
+                color={colorScheme === 'dark' ? 'lime' : '#007712' } 
+                size={18} 
+                />
+            </ThemeIcon>
+          )
+      }>
       </NavbarBlock>
     </Navbar>
   );

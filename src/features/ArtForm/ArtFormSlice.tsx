@@ -22,7 +22,7 @@ const initialState: ArtFormState = {
   shadowOffsetX: 1,
   shadowOffsetY: 2,
   shadowBlur: 4,
-  shadowOpacity: 0.6,
+  shadowOpacity: 66,
   minLineWidth: 3,
   maxLineWidth: 18,
   strokeDashArray: [5,15],

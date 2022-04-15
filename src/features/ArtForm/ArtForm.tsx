@@ -1,17 +1,19 @@
-import { Accordion, Box, Button, ColorInput, Divider, Grid, Group, NumberInput } from '@mantine/core';
+import { Accordion, Box, Button, ColorInput, Divider, Group, NumberInput, TextInput, useMantineColorScheme } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import React, { ChangeEvent, useState } from 'react';
-import { Plus } from 'tabler-icons-react';
+import React, { useMemo, useState } from 'react';
+import { Dimensions, Plus, ColorSwatch, Shadow, Line, RefreshDot, Refresh } from 'tabler-icons-react';
 import { useAppDispatch, useAppSelector } from '../../components/app/hooks';
 import RemovableColorSwatch from '../../components/controls/RemovableColorSwatch';
 import { addColor, removeColor } from './ArtFormSlice';
 
 export default function ArtForm() {
   const [newColor, setNewColor] = useState<string>('#11efac')
-
+  const { colorScheme } = useMantineColorScheme()
   const handleChange = (color: string) => {
     setNewColor(color)
   }
+
+  const iconColor = useMemo(() => colorScheme === 'dark' ? 'rgb(100,100,100)' : 'rgb(200,200,200)', [colorScheme])
 
   const imageSize: [number, number] = useAppSelector((state) => {
     const {imgHeight, imgWidth } = state.artForm
@@ -67,7 +69,9 @@ export default function ArtForm() {
   return (
     <Box component={'form'} my={'xl'}>
       <Accordion>
-        <Accordion.Item label="Dimensions">
+        <Accordion.Item 
+          icon={<Dimensions color={iconColor}/>} 
+          label="Dimensions">
           <NumberInput 
             label="Width" 
             min={200} 
@@ -79,8 +83,10 @@ export default function ArtForm() {
             max={2000} 
             {...form.getInputProps('imgHeight')}/>
         </Accordion.Item>
-        <Accordion.Item label="Colors">
-          <Group spacing={'xs'}>
+        <Accordion.Item 
+          icon={<ColorSwatch color={iconColor} />} 
+          label="Colors">
+          <Group spacing={'xs'} mt={'sm'}>
             {colors.map((color: string) => {
               return (
                 <RemovableColorSwatch 
@@ -100,7 +106,35 @@ export default function ArtForm() {
             </Box>
           </Box>
         </Accordion.Item>
+        <Accordion.Item 
+          icon={<Shadow color={iconColor} />} 
+          label="Shadows">
+          <NumberInput label="Offset X" {...form.getInputProps('shadowOffsetX')}/>
+          <NumberInput label="Offset Y" {...form.getInputProps('shadowOffsetY')}/>
+          <NumberInput label="Blur" {...form.getInputProps('shadowBlur')}/>
+          <NumberInput label="Opacity" min={0} max={100} step={1} {...form.getInputProps('shadowOpacity')}/>
+        </Accordion.Item>
+        <Accordion.Item 
+          icon={<Line color={iconColor}/>} 
+          label="Lines">
+          <NumberInput label="Minimum Line Width" {...form.getInputProps('minLineWidth')}/>
+          <NumberInput label="Maximum Line Width" {...form.getInputProps('maxLineWidth')}/>
+          <TextInput label="Stroke Dasharray (comma separated)" {...form.getInputProps('strokeDashArray')}/>
+          <NumberInput label="Stroke Dashoffset" {...form.getInputProps('strokeDashOffset')}/>
+        </Accordion.Item>
+        <Accordion.Item 
+          icon={<RefreshDot color={iconColor} />} 
+          label="Passes">
+          <NumberInput label="Passes" {...form.getInputProps('passes')}/>
+        </Accordion.Item>
       </Accordion>
+      <Group my={'xl'} pl={36}>
+        <Button 
+          variant={'gradient'} 
+          type="submit" 
+          rightIcon={<Refresh />}
+          gradient={{from: 'green', to: 'lime'}}>Generate</Button>
+      </Group>
     </Box>
   );
 }
