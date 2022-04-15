@@ -1,6 +1,10 @@
 import { ArtFormState } from "../features/ArtForm/ArtFormSlice";
 
-export function drawSplatter(ctx: CanvasRenderingContext2D, state: ArtFormState, amount: number = 16): void {
+export function drawSplatter(
+  ctx: CanvasRenderingContext2D, 
+  state: ArtFormState,
+  opacity: number = 1, 
+  amount: number = 16): void {
   function getRandomCoordinates(): [number, number] {
     const { random, ceil } = Math
     const { width, height } = ctx.canvas
@@ -41,7 +45,12 @@ export function drawSplatter(ctx: CanvasRenderingContext2D, state: ArtFormState,
   ctx.lineWidth = getRandomLineWidth()
   ctx.lineDashOffset = state.strokeDashOffset
   ctx.filter = getShadow()
-  ctx.setLineDash(state.strokeDashArray)
+  const dashArray = typeof state.strokeDashArray === 'string' 
+    ? (state.strokeDashArray as string).split(/\,\s*/g).map(s => +s)
+    : state.strokeDashArray
+  ctx.setLineDash(dashArray)
+  ctx.globalCompositeOperation = 'hard-light'
+  ctx.globalAlpha = opacity
   ctx.lineCap = 'round'
   ctx.strokeStyle = randomColor()
   ctx.beginPath()

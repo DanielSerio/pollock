@@ -138,7 +138,7 @@ export default function ArtForm() {
           <Divider my={'xl'}/>
           <Box sx={{display: 'flex' }}>
             <Box sx={{ flex: 1, marginRight: '2ch' }}>
-              <ColorInput defaultValue={newColor} onChange={handleChange}/>
+              <ColorInput value={newColor} onChange={handleChange}/>
             </Box>
             <Box sx={{ flex: 0 }}>
               <Button color={'gray'} leftIcon={<Plus />} onClick={() => dispatch(addColor(newColor))}>Add</Button>

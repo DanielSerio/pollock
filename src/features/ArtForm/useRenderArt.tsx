@@ -7,7 +7,8 @@ export function useRenderArt(ref: RefObject<HTMLCanvasElement>, state: ArtFormSt
     if (state && ref && ref.current) {
       const ctx: CanvasRenderingContext2D = ref.current.getContext('2d') as CanvasRenderingContext2D
       for (let i = 0; i < state.passes; i += 1) {
-        drawSplatter(ctx, state)
+        const distanceFromEnd: number = state.passes - i
+        drawSplatter(ctx, state, distanceFromEnd / state.passes)
       }
     }
   }, [ref, state])
