@@ -1,6 +1,6 @@
 import { Box, BoxProps, Button, Navbar, useMantineColorScheme } from '@mantine/core';
 import React, { ReactElement } from 'react';
-import { Moon, Sun } from 'tabler-icons-react';
+import { Moon, Settings, Sun } from 'tabler-icons-react';
 
 export interface AppNavbarProps {
   opened: boolean
@@ -14,6 +14,7 @@ interface NavbarBlockProps extends BoxProps<'div'> {
 export default function AppNavbar({ opened }: AppNavbarProps) {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme()
   function NavbarBlock({ children, icon }: NavbarBlockProps) {
+    const iconBlockSize: number = 48
     return (
       <Box m={0} p={0} sx={{
         display: 'flex'
@@ -30,12 +31,12 @@ export default function AppNavbar({ opened }: AppNavbarProps) {
         <Box sx={{
           flex: 0, 
           display: 'inline-grid',
-          minHeight: 24,
-          maxHeight: 24,
-          minWidth: 24,
-          maxWidth: 24,
-          width: 24,
-          height: 24,
+          minHeight: iconBlockSize,
+          maxHeight: iconBlockSize,
+          height: iconBlockSize,
+          minWidth: iconBlockSize,
+          maxWidth: iconBlockSize,
+          width: iconBlockSize,
           alignItems: 'center',
           justifyContent: 'center' 
           }}>{icon}</Box>
@@ -45,21 +46,26 @@ export default function AppNavbar({ opened }: AppNavbarProps) {
   
   return (
     <Navbar 
-      width={opened ? { xs: 200 } : { xs: 24 }}
+      width={opened ? { xs: 200 } : { xs: 48 }}
       sx={{
-          transition: 'all 180ms ease', 
-          overflow: 'hidden' 
+        width: opened ? 200 : 48,
+        transition: 'all 180ms ease', 
+        overflow: 'hidden' 
       }}>
       <NavbarBlock 
-        icon={colorScheme === 'dark' ? <Sun size={16} /> : <Moon size={16}/>}>
+        icon={colorScheme === 'dark' ? <Sun size={18} /> : <Moon size={18}/>}>
         <Button 
           color={'gray'} 
           variant='subtle' 
           fullWidth 
           size='xs'
+          sx={{height: '100%'}}
           onClick={() => toggleColorScheme()}>
           {colorScheme === 'dark' ? 'Lightmode' : 'Darkmode' }
         </Button>
+      </NavbarBlock>
+      <NavbarBlock icon={<Settings size={18} />}>
+
       </NavbarBlock>
     </Navbar>
   );
