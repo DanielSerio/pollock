@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { useState } from 'react';
 import AppHeader from './components/AppShell/AppHeader';
 import AppNavbar from './components/AppShell/AppNavbar';
+import ArtBoard from './features/ArtForm/ArtBoard';
 
 export default function App() {
   const [opened, setOpened] = useState<boolean>(false)
@@ -16,7 +17,7 @@ export default function App() {
       })}
       header={<AppHeader opened={opened} openMenu={openMenu}/>}
       navbar={<AppNavbar opened={opened}/>}>
-
+        <ArtBoard />
     </AppShell>
   );
 }

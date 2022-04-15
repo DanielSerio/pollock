@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-interface ArtFormState {
+export interface ArtFormState {
   imgWidth: number
   imgHeight: number
   colors: string[]

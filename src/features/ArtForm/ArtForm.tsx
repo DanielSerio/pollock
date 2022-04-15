@@ -1,10 +1,10 @@
 import { Accordion, Box, Button, ColorInput, Divider, Group, NumberInput, TextInput, useMantineColorScheme } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Dimensions, Plus, ColorSwatch, Shadow, Line, RefreshDot, Refresh } from 'tabler-icons-react';
 import { useAppDispatch, useAppSelector } from '../../components/app/hooks';
 import RemovableColorSwatch from '../../components/controls/RemovableColorSwatch';
-import { addColor, removeColor } from './ArtFormSlice';
+import { addColor, removeColor, setImageSize, setLineWidth, setPasses, setShadowBlur, setShadowOffset, setShadowOpacity, setStrokeDashArray, setStrokeDashOffset } from './ArtFormSlice';
 
 export default function ArtForm() {
   const [newColor, setNewColor] = useState<string>('#11efac')
@@ -65,6 +65,43 @@ export default function ArtForm() {
     }
   })
 
+  const setDimensions = useCallback(() => {
+    dispatch(setImageSize([form.values.imgWidth, form.values.imgHeight]))
+  }, [form])
+
+  const handleShadowOffset = useCallback(({ x, y }: {x?: true, y?: true}) => {
+    if (x) dispatch(setShadowOffset({x: form.values.shadowOffsetX}))
+    if (y) dispatch(setShadowOffset({y: form.values.shadowOffsetY}))
+  }, [form])
+  const setBlur = useCallback(() => {
+    dispatch(setShadowBlur(form.values.shadowBlur))  
+  }, [form])
+
+  const setOpacity = useCallback(() => {
+    dispatch(setShadowOpacity(form.values.shadowOpacity))  
+  }, [form])
+
+  const handleLineWidth = useCallback(({ min, max }: {min?: true, max?: true}) => {
+    const { minLineWidth, maxLineWidth } = form.values
+    if (min) dispatch(setLineWidth({min: minLineWidth})) 
+    if (max) dispatch(setLineWidth({max: maxLineWidth}))   
+  }, [form])
+
+  const handleStrokeDashArray = useCallback(() => {
+    const { strokeDashArray } = form.values
+    dispatch(setStrokeDashArray(strokeDashArray))
+  }, [form])
+
+  const handleStrokeDashOffset = useCallback(() => {
+    const { strokeDashOffset } = form.values
+    dispatch(setStrokeDashOffset(strokeDashOffset))
+  }, [form])
+
+  const handlePasses = useCallback(() => {
+    const { passes } = form.values
+    dispatch(setPasses(passes))
+  }, [form])
+
 
   return (
     <Box component={'form'} my={'xl'}>
@@ -76,12 +113,14 @@ export default function ArtForm() {
             label="Width" 
             min={200} 
             max={2000} 
-            {...form.getInputProps('imgWidth')}/>
+            {...form.getInputProps('imgWidth')}
+            onBlur={setDimensions}/>
           <NumberInput 
             label="Height" 
             min={200} 
             max={2000} 
-            {...form.getInputProps('imgHeight')}/>
+            {...form.getInputProps('imgHeight')}
+            onBlur={setDimensions}/>
         </Accordion.Item>
         <Accordion.Item 
           icon={<ColorSwatch color={iconColor} />} 
@@ -109,23 +148,53 @@ export default function ArtForm() {
         <Accordion.Item 
           icon={<Shadow color={iconColor} />} 
           label="Shadows">
-          <NumberInput label="Offset X" {...form.getInputProps('shadowOffsetX')}/>
-          <NumberInput label="Offset Y" {...form.getInputProps('shadowOffsetY')}/>
-          <NumberInput label="Blur" {...form.getInputProps('shadowBlur')}/>
-          <NumberInput label="Opacity" min={0} max={100} step={1} {...form.getInputProps('shadowOpacity')}/>
+          <NumberInput 
+            label="Offset X" 
+            {...form.getInputProps('shadowOffsetX')}
+            onBlur={() => handleShadowOffset({ x: true })}/>
+          <NumberInput 
+            label="Offset Y" 
+            {...form.getInputProps('shadowOffsetY')}
+            onBlur={() => handleShadowOffset({ y: true })}/>
+          <NumberInput 
+            label="Blur" 
+            {...form.getInputProps('shadowBlur')}
+            onBlur={setBlur}/>
+          <NumberInput 
+          label="Opacity" 
+          min={0} 
+          max={100} 
+          step={1} 
+          {...form.getInputProps('shadowOpacity')}
+          onBlur={setOpacity}/>
         </Accordion.Item>
         <Accordion.Item 
           icon={<Line color={iconColor}/>} 
           label="Lines">
-          <NumberInput label="Minimum Line Width" {...form.getInputProps('minLineWidth')}/>
-          <NumberInput label="Maximum Line Width" {...form.getInputProps('maxLineWidth')}/>
-          <TextInput label="Stroke Dasharray (comma separated)" {...form.getInputProps('strokeDashArray')}/>
-          <NumberInput label="Stroke Dashoffset" {...form.getInputProps('strokeDashOffset')}/>
+          <NumberInput 
+            label="Minimum Line Width" 
+            {...form.getInputProps('minLineWidth')}
+            onBlur={() => handleLineWidth({ min: true })}/>
+          <NumberInput 
+            label="Maximum Line Width" 
+            {...form.getInputProps('maxLineWidth')}
+            onBlur={() => handleLineWidth({ max: true })}/>
+          <TextInput 
+            label="Stroke Dasharray (comma separated)" 
+            {...form.getInputProps('strokeDashArray')}
+            onBlur={handleStrokeDashArray}/>
+          <NumberInput 
+          label="Stroke Dashoffset" 
+          {...form.getInputProps('strokeDashOffset')}
+          onBlur={handleStrokeDashOffset}/>
         </Accordion.Item>
         <Accordion.Item 
           icon={<RefreshDot color={iconColor} />} 
           label="Passes">
-          <NumberInput label="Passes" {...form.getInputProps('passes')}/>
+          <NumberInput 
+            label="Passes" 
+            {...form.getInputProps('passes')}
+            onBlur={handlePasses}/>
         </Accordion.Item>
       </Accordion>
       <Group my={'xl'} pl={36}>
