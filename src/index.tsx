@@ -1,9 +1,11 @@
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core'
 import { useHotkeys, useLocalStorage } from '@mantine/hooks'
+import { Provider as ReduxProvider } from 'react-redux'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 import './global.scss'
+import { store } from './components/app/store'
 
 const container = document.getElementById('root') as HTMLDivElement
 
@@ -26,7 +28,9 @@ function AppWrapper() {
       toggleColorScheme={toggleColorScheme} 
       colorScheme={colorScheme}>
       <MantineProvider theme={{ colorScheme, primaryColor: 'lime' }}>
-        <App />
+        <ReduxProvider store={store}>
+          <App />
+        </ReduxProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   )
