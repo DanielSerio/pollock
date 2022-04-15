@@ -21,7 +21,7 @@ export default function ArtBoard() {
     <Box>
       <Container mt={'xl'} sx={{ width: 'auto', maxWidth:'80%'}}>
         <ScrollArea classNames={classes} dir='ltr'>
-          <Paper sx={{textAlign: 'center'}}>
+          <Paper py={'md'} sx={{textAlign: 'center'}}>
             <canvas ref={ref} height={imageHeight} width={imageWidth}/>
           </Paper>
         </ScrollArea>
