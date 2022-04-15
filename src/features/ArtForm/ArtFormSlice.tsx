@@ -18,7 +18,7 @@ interface ArtFormState {
 const initialState: ArtFormState = {
   imgWidth: 805,
   imgHeight: 500,
-  colors: [],
+  colors: ['cyan', 'yellow', 'magenta'],
   shadowOffsetX: 1,
   shadowOffsetY: 2,
   shadowBlur: 4,

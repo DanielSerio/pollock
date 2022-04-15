@@ -1,6 +1,7 @@
 import { Box, BoxProps, Button, Navbar, useMantineColorScheme } from '@mantine/core';
 import React, { ReactElement } from 'react';
 import { Moon, Settings, Sun } from 'tabler-icons-react';
+import ArtForm from '../../features/ArtForm/ArtForm';
 
 export interface AppNavbarProps {
   opened: boolean
@@ -17,7 +18,10 @@ export default function AppNavbar({ opened }: AppNavbarProps) {
     const iconBlockSize: number = 48
     return (
       <Box m={0} p={0} sx={{
-        display: 'flex'
+        display: 'flex',
+        '&:not(:last-of-type)': {
+          borderBottom: `1px solid ${colorScheme === 'dark' ? '#2C2E33' : '#F8F9FA'}`
+        }
         }}>
         <Box sx={{ 
           flex: 1,
@@ -46,9 +50,9 @@ export default function AppNavbar({ opened }: AppNavbarProps) {
   
   return (
     <Navbar 
-      width={opened ? { xs: 200 } : { xs: 48 }}
+      width={opened ? { xs: 400 } : { xs: 48 }}
       sx={{
-        width: opened ? 200 : 48,
+        width: opened ? 400 : 48,
         transition: 'all 180ms ease', 
         overflow: 'hidden' 
       }}>
@@ -65,7 +69,7 @@ export default function AppNavbar({ opened }: AppNavbarProps) {
         </Button>
       </NavbarBlock>
       <NavbarBlock icon={<Settings size={18} />}>
-
+        <ArtForm />
       </NavbarBlock>
     </Navbar>
   );
